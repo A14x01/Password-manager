@@ -30,7 +30,7 @@ def add():
                 account_name = input("Account name: ")
                 account_password = input("Account password: ")
                 f.write(account_name + ":" + account_password)
-                print("Your first account has been created ")
+                print("Your first account has been created")
         else:
             for line in f.readlines():
                 saved_data = (line.rstrip())
@@ -44,6 +44,7 @@ def add():
                             pass
                         else:
                             f.write(account_name + ":" + account_password)
+                            print("New account has been created")
                             break
                 break
 
