@@ -15,8 +15,6 @@ def login():
                     print("Wrong password or name, please try again.")
             break
 
-
-
 def view():
     with open("password.txt", "r") as f:
         for line in f.readlines():
@@ -25,11 +23,22 @@ def view():
             print("User: ", user, "\nPassword: ", password)
 
 def add():
-    account_name = input("Account name: ")
-    account_password = input("Account password: ")
+    with open("password.txt", "r") as f:
+        for line in f.readlines():
+            saved_data = (line.rstrip())
+            while True:
+                with open("password.txt", "a") as f:
+                    account_name = input("Account name: ")
+                    account_password = input("Account password: ")
+                    saved_account = (account_name + ":" + account_password)
+                    if saved_account == saved_data:
+                        print("This account already exist")
+                        pass
+                    else:
+                        f.write(account_name + ":" + account_password)
+                        break
+            break
 
-    with open("password.txt", "a") as f:
-        f.write(account_name + ":" + account_password + "\n")
 while True:
     print("If you want to sign in your account write login.")
     print("If you want to add new account write add.\nIf you want to view existing accounts write view.")
