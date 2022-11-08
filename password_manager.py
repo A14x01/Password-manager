@@ -29,24 +29,25 @@ def add():
             with open("password.txt", "a") as f:
                 account_name = input("Account name: ")
                 account_password = input("Account password: ")
-                f.write(account_name + ":" + account_password)
+                f.write(account_name + ":" + account_password + "\n")
                 print("Your first account has been created")
         else:
-            for line in f.readlines():
-                saved_data = (line.rstrip())
-                user, password = saved_data.split(":")
-                while True:
-                    with open("password.txt", "a") as f:
-                        account_name = input("Account name: ")
-                        account_password = input("Account password: ")
-                        if account_name == user:
-                            print("This account already exist")
-                            pass
-                        else:
-                            f.write(account_name + ":" + account_password)
-                            print("New account has been created")
-                            break
-                break
+            with open("password.txt", "r") as f:
+                for line in f.readlines():
+                    saved_data = (line.rstrip())
+                    user, password = saved_data.split(":")
+                    while True:
+                        with open("password.txt", "a") as f:
+                            account_name = input("Account name: ")
+                            account_password = input("Account password: ")
+                            if account_name == user:
+                                print("This account already exist")
+                                pass
+                            else:
+                                f.write(account_name + ":" + account_password + "\n")
+                                print("New account has been created")
+                                break
+                    break
 
 while True:
     print("If you want to sign in your account write login.")
