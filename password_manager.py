@@ -23,18 +23,16 @@ def view():
             print("User: ", user, "\nPassword: ", password)
 
 def add():
-    account_name = input("Account name: ")
-    account_password = input("Account password: ")
     with open("password.txt", "r") as f:
         for line in f.readlines():
             saved_data = (line.rstrip())
             user, password = saved_data.split(":")
             while True:
                 with open("password.txt", "a") as f:
+                    account_name = input("Account name: ")
+                    account_password = input("Account password: ")
                     if account_name == user:
                         print("This account already exist")
-                        account_name = input("Account name: ")
-                        account_password = input("Account password: ")
                         pass
                     else:
                         f.write(account_name + ":" + account_password)
