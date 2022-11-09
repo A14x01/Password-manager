@@ -1,7 +1,10 @@
 print("Welcome to password manager")
 
-with open('password.txt', 'x') as f:
-    f.write("")
+try:
+    with open('password.txt', 'x') as f:
+        f.close()
+except:
+    pass
 
 def rot13(s):
     chars = "abcdefghijklmnopqrstuvwxyz"
