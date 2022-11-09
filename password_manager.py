@@ -19,7 +19,11 @@ def login():
             while True:
                 account_name_login = input("Account name: ")
                 account_password_login = input("Account password: ")
-                account_access = (account_name_login + ":" + account_password_login)
+                account_access = rot13((account_name_login + ":" + account_password_login))
+                print(account_access)
+                print(account_name_login)
+                print(account_password_login)
+                print(data_login)
                 if account_access == data_login:
                     print("Welcome, " + account_name_login)
                     break
