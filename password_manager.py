@@ -13,19 +13,33 @@ def rot13(s):
     return ''.join( rot_char(c) for c in s )
 
 def login():
+    decrypted_users = []
+    decrypted_passwords = []
     with open("password.txt", "r") as f:
         for line in f.readlines():
             data_login = (line.rstrip())
+            user, password = data_login.split(":")
+            decrypted_user = rot13(user)
+            decrypted_password = rot13(password)
+            decrypted_users.append(decrypted_user)
+            decrypted_passwords.append(decrypted_password)
         while True:
-            account_name_login = input("Account name: ")
-            account_password_login = input("Account password: ")
-            account_access = rot13((account_name_login + ":" + account_password_login))
-            if account_access == data_login:
-                print("Welcome, " + account_name_login)
+            try:
+                account_name = input("Account name:")
+                index_of_user = decrypted_users.index(account_name)
+            except:
+                print("Wrong")
+                continue
+            account_password = input("Account password:")
+            if decrypted_passwords[index_of_user] == account_password:
+                print("Welcome, " + account_name)
                 break
+            elif decrypted_user != account_name:
+                print("Wrong username.")
+            elif decrypted_password != account_password:
+                print("Wrong password.")
             else:
                 print("Wrong password or name, please try again.")
-
 
 def view():
     with open("password.txt", "r") as f:
