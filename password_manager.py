@@ -1,5 +1,8 @@
 print("Welcome to password manager")
 
+with open('password.txt', 'x') as f:
+    f.write("")
+
 def rot13(s):
     chars = "abcdefghijklmnopqrstuvwxyz"
     trans = chars[13:]+chars[:13]
