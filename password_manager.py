@@ -1,5 +1,11 @@
 print("Welcome to password manager")
 
+def rot13(s):
+    chars = "abcdefghijklmnopqrstuvwxyz"
+    trans = chars[13:]+chars[:13]
+    rot_char = lambda c: trans[chars.find(c)] if chars.find(c)>-1 else c
+    return ''.join( rot_char(c) for c in s )
+
 def login():
     with open("password.txt", "r") as f:
         for line in f.readlines():
@@ -15,13 +21,12 @@ def login():
                     print("Wrong password or name, please try again.")
             break
 
-
 def view():
     with open("password.txt", "r") as f:
         for line in f.readlines():
             data = (line.rstrip())
             user, password = data.split(":")
-            print("User: ", user, "\nPassword: ", password)
+            print("User: ", rot13(user), "\nPassword: ", rot13(password))
 
 def add():
     with open("password.txt", "r") as f:
@@ -29,7 +34,7 @@ def add():
             with open("password.txt", "a") as f:
                 account_name = input("Account name: ")
                 account_password = input("Account password: ")
-                f.write(account_name + ":" + account_password + "\n")
+                f.write(rot13(account_name + ":" + account_password + "\n"))
                 print("Your first account has been created")
         else:
             with open("password.txt", "r") as f:
@@ -40,11 +45,11 @@ def add():
                         with open("password.txt", "a") as f:
                             account_name = input("Account name: ")
                             account_password = input("Account password: ")
-                            if account_name == user:
+                            if account_name == rot13(user):
                                 print("This account already exist")
                                 pass
                             else:
-                                f.write(account_name + ":" + account_password + "\n")
+                                f.write(rot13(account_name + ":" + account_password + "\n"))
                                 print("New account has been created")
                                 break
                     break
