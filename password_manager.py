@@ -15,6 +15,7 @@ def rot13(s):
 def login():
     decrypted_users = []
     decrypted_passwords = []
+    login_attempts = 0
     with open("password.txt", "r") as f:
         for line in f.readlines():
             data_login = (line.rstrip())
@@ -28,18 +29,22 @@ def login():
                 account_name = input("Account name:")
                 index_of_user = decrypted_users.index(account_name)
             except:
-                print("Wrong")
+                print("Wrong username.")
+                login_attempts += 1
+                if login_attempts == 3:
+                    print("Try again.")
+                    break
                 continue
             account_password = input("Account password:")
             if decrypted_passwords[index_of_user] == account_password:
                 print("Welcome, " + account_name)
                 break
-            elif decrypted_user != account_name:
-                print("Wrong username.")
-            elif decrypted_password != account_password:
-                print("Wrong password.")
+            elif login_attempts == 3:
+                print("Try again.")
+                break
             else:
-                print("Wrong password or name, please try again.")
+                print("Wrong password, please try again.")
+                login_attempts += 1
 
 def view():
     with open("password.txt", "r") as f:
@@ -73,7 +78,6 @@ def add():
                             print("New account has been created")
                             break
 
-
 while True:
     print("\nIf you want to sign in your account write login.")
     print("If you want to add new account write add.\nIf you want to view existing accounts write view.")
@@ -89,4 +93,5 @@ while True:
     else:
         print("Wrong mode")
         continue
+
 #code made by https://github.com/A14x01
