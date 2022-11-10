@@ -8,9 +8,9 @@ except:
 
 def rot13(s):
     chars = "abcdefghijklmnopqrstuvwxyz"
-    trans = chars[13:] + chars[:13]
-    rot_char = lambda c: trans[chars.find(c)] if chars.find(c) > -1 else c
-    return ''.join(rot_char(c) for c in s)
+    trans = chars[13:]+chars[:13]
+    rot_char = lambda c: trans[chars.find(c)] if chars.find(c)>-1 else c
+    return ''.join( rot_char(c) for c in s )
 
 def login():
     decrypted_users = []
@@ -77,7 +77,6 @@ def add():
                             f.write(rot13(account_name + ":" + account_password + "\n"))
                             print("New account has been created")
                             break
-
 def remove():
     decrypted_users = []
     decrypted_passwords = []
@@ -99,18 +98,16 @@ def remove():
                         index_of_user = decrypted_users.index(account_name)
                         account_password = input("Account password: ")
                         text = f.read()
+                        list = []
+                        for line in text.splitlines():
+                            list.append(line)  
                         if decrypted_passwords[index_of_user] == account_password:
+                            list.remove(rot13(account_name + ":" + account_password))
                             with open("password.txt", "w") as f:
-                                new_text = text.replace(f"{rot13(account_name)}:{rot13(account_password)}", '')
-                                f.write(new_text)
-                            with open("password.txt", "r") as f:
-                                for line in f.readlines():
-                                    new_data = (line.rstrip())
-                                    print(new_data)
-                                    with open("password.txt", "w") as f:
-                                        f.write(f"{new_data}\n")
-                            print("Account has been removed")
-                            break
+                                for line in list:
+                                    f.write(line + "\n")
+                                print("Account has been removed")
+                                break
                         else:
                             print("This account does not exist")
                             break
@@ -118,6 +115,7 @@ def remove():
 while True:
     print("\nIf you want to sign in your account write login.")
     print("If you want to add new account write add.\nIf you want to view existing accounts write view.")
+    print("If you want to remove existing account write remove.")
     mode = input("Press q to quit\n").lower()
     if mode == "q":
         break
