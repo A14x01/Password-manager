@@ -8,9 +8,9 @@ except:
 
 def rot13(s):
     chars = "abcdefghijklmnopqrstuvwxyz"
-    trans = chars[13:]+chars[:13]
-    rot_char = lambda c: trans[chars.find(c)] if chars.find(c)>-1 else c
-    return ''.join( rot_char(c) for c in s )
+    trans = chars[13:] + chars[:13]
+    rot_char = lambda c: trans[chars.find(c)] if chars.find(c) > -1 else c
+    return ''.join(rot_char(c) for c in s)
 
 def login():
     decrypted_users = []
@@ -78,6 +78,43 @@ def add():
                             print("New account has been created")
                             break
 
+def remove():
+    decrypted_users = []
+    decrypted_passwords = []
+    with open("password.txt", "r") as f:
+        if f.readlines() == []:
+            print("There is no account to remove")
+        else:
+            with open("password.txt", "r") as f:
+                for line in f.readlines():
+                    data_login = (line.rstrip())
+                    user, password = data_login.split(":")
+                    decrypted_user = rot13(user)
+                    decrypted_password = rot13(password)
+                    decrypted_users.append(decrypted_user)
+                    decrypted_passwords.append(decrypted_password)
+                while True:
+                    with open("password.txt", "r") as f:
+                        account_name = input("Account name: ")
+                        index_of_user = decrypted_users.index(account_name)
+                        account_password = input("Account password: ")
+                        text = f.read()
+                        if decrypted_passwords[index_of_user] == account_password:
+                            with open("password.txt", "w") as f:
+                                new_text = text.replace(f"{rot13(account_name)}:{rot13(account_password)}", '')
+                                f.write(new_text)
+                            with open("password.txt", "r") as f:
+                                for line in f.readlines():
+                                    new_data = (line.rstrip())
+                                    print(new_data)
+                                    with open("password.txt", "w") as f:
+                                        f.write(f"{new_data}\n")
+                            print("Account has been removed")
+                            break
+                        else:
+                            print("This account does not exist")
+                            break
+
 while True:
     print("\nIf you want to sign in your account write login.")
     print("If you want to add new account write add.\nIf you want to view existing accounts write view.")
@@ -90,8 +127,10 @@ while True:
         add()
     elif mode == "login":
         login()
+    elif mode == "remove":
+        remove()
     else:
         print("Wrong mode")
         continue
 
-#code made by https://github.com/A14x01
+# code made by https://github.com/A14x01 and https://github.com/ThatBlokeJosh
