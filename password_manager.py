@@ -133,4 +133,4 @@ while True:
         print("Wrong mode")
         continue
 
-# code made by https://github.com/A14x01 and https://github.com/ThatBlokeJosh
+# code made by https://github.com/A14x01
